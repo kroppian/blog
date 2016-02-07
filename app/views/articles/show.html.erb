@@ -1,0 +1,9 @@
+<h1>Our article!</h1>
+
+<h2><%= @article.title %></h2>
+
+<p><%= @article.text %></p>
+
+<p><%= link_to 'Edit me!', edit_article_path(@article)  %></p>
+<p><%= link_to 'Back to articles', controller: 'articles'  %></p>
+
