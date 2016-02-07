@@ -18,4 +18,6 @@
 
 # Ignore vim swap files
 *.swp
+*.swo
+*.swn
 
