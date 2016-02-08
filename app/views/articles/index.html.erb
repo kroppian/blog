@@ -13,7 +13,7 @@
       <h2 class="panel-title"><%= link_to art.title, article_path(art) %></h2>
     </div>
     <div class="panel-body">
-      <%= art.text %>    
+      <%= truncate art.text,length: 400, separator: ' ' %>    
     </div>
   </div>
 
