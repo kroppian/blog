@@ -6,25 +6,34 @@ class ArticlesController < ApplicationController
   end
 
   def index
-    printf "Hello world!"
     @articles = Article.all
   end
 
   def new 
-    if is_admin?
-      @article = Article.new
-    else
-      @articles = Article.all
-      render 'index'
+    if not is_admin?
+      render_forbidden
     end  
+
+    @article = Article.new
 
   end
 
   def edit 
+
+    if not is_admin?
+      render_forbidden
+    end
+
     @article = Article.find(params[:id])
+
   end
 
   def create
+
+    if not is_admin?
+      render_forbidden
+    end
+
     @article = Article.new(article_params)
     result = @article.save
     if result
@@ -36,6 +45,10 @@ class ArticlesController < ApplicationController
 
   def update
 
+    if not is_admin?
+      render_forbidden
+    end
+
     @article = Article.find(params[:id])
     if @article.update(article_params)
       redirect_to @article
@@ -46,7 +59,11 @@ class ArticlesController < ApplicationController
   end
 
   def destroy 
-  
+
+    if not is_admin?
+      render_forbidden
+    end
+
     @article = Article.find(params[:id])
     @article.destroy
     redirect_to articles_path
