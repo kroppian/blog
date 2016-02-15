@@ -9,11 +9,7 @@ module SessionsHelper
   end
 
   def is_admin?
-    begin 
-      User.find_by(id: session[:user_id]).name == "admin"
-    rescue => exception
-      false
-    end
+    (not current_user.nil? ) && (User.find_by(id: session[:user_id]).name.eql? "admin")
   end
 
   def log_out
