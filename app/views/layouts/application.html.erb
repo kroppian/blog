@@ -34,9 +34,9 @@
       </ul>
       <% if current_user %>
       <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Log out", log_out %></li> 
+        <li><%= link_to "Log out", {controller: "sessions", action: "destroy"}, {'data-method' => :delete} %></li> 
       </ul>
-      <% end %>
+    <% end %>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>

@@ -3,15 +3,20 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find(params[:id])
-
   end
 
   def index
+    printf "Hello world!"
     @articles = Article.all
   end
 
   def new 
-    @article = Article.new
+    if is_admin?
+      @article = Article.new
+    else
+      @articles = Article.all
+      render 'index'
+    end  
 
   end
 
