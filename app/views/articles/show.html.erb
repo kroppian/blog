@@ -3,6 +3,9 @@
 <br>
 <p><%= simple_format @article.text %></p>
 
-<p><%= link_to 'Edit me!', edit_article_path(@article)  %></p>
+<% if is_admin? %>
+  <p><%= link_to 'Edit me!', edit_article_path(@article)  %></p>
+<% end %>
+
 <p><%= link_to 'Back to articles', controller: 'articles'  %></p>
 
