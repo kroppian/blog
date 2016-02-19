@@ -30,11 +30,24 @@
             <span class="sr-only">(current)</span>
           <% end %>
         </li>
-      <li><a href="#">About</a></li>
+        <li><a href="#">About</a></li>
+      </ul>
+      <% if current_user %>
+        <ul class="nav navbar-nav navbar-right">
+          <li><%= link_to "Log out", {controller: "sessions", action: "destroy"}, {'data-method' => :delete} %></li> 
+        </ul>
+      <% end %>
+      <% if is_admin? %>
+        <p class="navbar-text navbar-right" id="admin-flash">Admin Mode</p>
+      <% end %>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
-  </nav>
-  <div class="container">
+</nav>
+
+<div class="container">
+     <% flash.each do |message_type, message| %>
+       <div class="alert alert-<%= message_type %>"><%= message %></div>
+     <% end %>
     <%= yield %>
   </div>
 </body>
