@@ -2,7 +2,7 @@
 
 paul:
   name: paul
-  password_digest: <%= User.digest('badpassword') %>
+  password_digest: <%= User.digest('lamepassword') %>
 
 admin:
   name: admin
