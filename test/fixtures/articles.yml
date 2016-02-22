@@ -1,14 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  text: MyText
+  title: Tinker Tailor Soldier Spy
+  text: In the end, they find out the Spy was the spy. I thought it was the Tinker. 
 
 two:
-  title: MyString
-  text: MyText
+  title: Gone With the Wind
+  text: Here with the Earth, am I right???
 
 
 three:
-  title: MyString
-  text: MyText
+  title: War and Peace
+  text: It's a book about nothing! 
