@@ -9,4 +9,38 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+
+  def assert_admin_flash(has_flash)
+    # there should only be one or zero admin flashes
+    assert_select '#admin-flash',count: (has_flash ? 1 : 0)
+  end
+
+  def assert_edit_button_count(number_of_buttons)
+    assert_select 'a[data-method=delete][href^="/articles"]', count: number_of_buttons  
+  end
+
+  def assert_delete_button_count(number_of_buttons)
+    assert_select 'a[href^="/articles"][href$="edit"]', count: number_of_buttons  
+    assert_navbar_good
+  end
+
+  def assert_navbar_good
+    # Look for the brand link the top left hand corner
+    assert_select 'a[href=?][class=navbar-brand]', articles_path, count: 1
+    # Look for the "Home link"
+    assert_select 'a[href=?] > span', articles_path, count: 1 
+  end
+
+  def assert_logged_in_navbar_good
+    assert_select "a[href=?]", logout_path, count: 1 
+    assert_navbar_good
+  end
+
+  def user_logs_in(user_name, password)
+    get login_path
+    assert_template 'sessions/new'
+    post login_path, session: {name: user_name, password: password}
+  end
+
+
 end
