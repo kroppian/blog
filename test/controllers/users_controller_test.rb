@@ -21,7 +21,6 @@ class UsersControllerTest < ActionController::TestCase
     }  
     assert_equal about_found, @admin_user.about
 
-
-   
   end
+
 end
