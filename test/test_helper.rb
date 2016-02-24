@@ -29,6 +29,7 @@ class ActiveSupport::TestCase
     assert_select 'a[href=?][class=navbar-brand]', articles_path, count: 1
     # Look for the "Home link"
     assert_select 'a[href=?] > span', articles_path, count: 1 
+    assert_select 'a[href=?]', about_path, count: 1
   end
 
   def assert_logged_in_navbar_good

@@ -1,13 +1,17 @@
 Rails.application.routes.draw do
 
+  root 'articles#index'
+
+  # Session routes
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
 
-  resources :articles
+  # user routes 
+  get 'about'  => 'users#about'
 
-  #root 'welcome#index'
-  root 'articles#index'
+  # article routes 
+  resources :articles
 
   
 

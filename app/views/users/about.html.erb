@@ -1,0 +1,14 @@
+
+<% if @owner.nil? %>
+
+  <h1> No about page set!  </h1>
+  <h2> Contact the administrator to populate this page. </h2>
+
+<% else %>
+
+  <h1>About <%= @owner.name %></h1>
+  <p><%= @owner.about %></p>
+
+<% end %>
+
+

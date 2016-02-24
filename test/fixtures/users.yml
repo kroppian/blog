@@ -3,8 +3,10 @@
 paul:
   name: paul
   password_digest: <%= User.digest('lamepassword') %>
+  about: 
 
 admin:
   name: admin
   password_digest: <%= User.digest('adminpassword') %>
+  about: A stately fellow. Really great eye brows. 
 
