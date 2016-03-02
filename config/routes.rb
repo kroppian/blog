@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   # user routes 
   get 'about'  => 'users#about'
+  resources :users
+  
 
   # article routes 
   resources :articles
