@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+  before_action :check_autho, except: [:about]
+
   def edit 
     @user = User.find(params[:id])
   end
@@ -22,6 +24,10 @@ class UsersController < ApplicationController
     
     def user_params
       params.require(:user).permit(:name, :password, :password_confirmation)
+    end
+
+    def check_autho
+      render_forbidden
     end
 
 end

@@ -2,16 +2,6 @@
 
 <%= form_for @session do |f| %>
 
-  <h1>Edit user </h1>
-
-  <% if @article.errors.any? %>
-    <div id="error_explanation">
-      <h2>Error! <%= pluralize(@article.errors.count, "error") %> prohibited this article from being saved:</h2>
-      <ul><% @article.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %></ul>
-    </div>
-  <% end %>
 
   
 

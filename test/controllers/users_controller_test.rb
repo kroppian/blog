@@ -23,4 +23,11 @@ class UsersControllerTest < ActionController::TestCase
 
   end
 
+  test "If not logged in, should not have access to edit user passwords" do
+
+    get(:edit, {'id' => @user.id})
+    assert_response 403
+
+  end 
+
 end
