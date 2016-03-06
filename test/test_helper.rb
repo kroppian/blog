@@ -43,5 +43,8 @@ class ActiveSupport::TestCase
     post login_path, session: {name: user_name, password: password}
   end
 
+  def user_logs_out
+    delete logout_path      
+  end 
 
 end

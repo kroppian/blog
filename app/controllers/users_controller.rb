@@ -19,7 +19,6 @@ class UsersController < ApplicationController
     end
   end
 
-
   private 
     
     def user_params
@@ -27,7 +26,9 @@ class UsersController < ApplicationController
     end
 
     def check_autho
-      render_forbidden
+      if not current_user_id?(params[:id])
+        render_forbidden
+      end
     end
 
 end

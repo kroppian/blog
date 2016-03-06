@@ -12,6 +12,10 @@ module SessionsHelper
     (not current_user.nil? ) && (User.find_by(id: session[:user_id]).name.eql? "admin")
   end
 
+  def current_user_id? ( id_in_question )
+    (not current_user.nil? )  && (User.find_by(id: session[:user_id]).id.to_i ==  id_in_question.to_i)
+  end
+
   def log_out
     session.delete(:user_id)
     @current_user = nil
