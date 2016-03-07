@@ -53,5 +53,22 @@ class UserLoginTest < ActionDispatch::IntegrationTest
     assert_admin_flash true
   end
 
+  test "Users that are not logged in should not have user management options" do 
+    get articles_path
+    assert_user_settings_not_present
+
+  end
+
+  test "Only users should have user management options" do 
+    
+    user_logs_in(@admin_user.name, "adminpassword")
+    follow_redirect!
+
+    assert_user_settings_present @admin_user.id
+    user_logs_out
+
+    assert_user_settings_not_present @admin_user.id
+
+  end
 
 end

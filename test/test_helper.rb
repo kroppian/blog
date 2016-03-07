@@ -32,6 +32,20 @@ class ActiveSupport::TestCase
     assert_select 'a[href=?]', about_path, count: 1
   end
 
+  def assert_user_settings_not_present(*uid)
+    
+    assert_select 'a[href=?]', logout_path, count: 0 
+    uid.empty? ? assert_select('a[href^="/users/"][href$="/edit"]', count: 0) : assert_select('a[href=?]', "/users/" + uid.to_s + "/edit", count: 0)
+
+  end
+
+  def assert_user_settings_present(uid )
+
+    assert_select 'a[href=?]', logout_path, count: 1 
+    assert_select 'a[href=?]', "/users/" + uid.to_s + "/edit", count: 1
+    
+  end
+
   def assert_logged_in_navbar_good
     assert_select "a[href=?]", logout_path, count: 1 
     assert_navbar_good
