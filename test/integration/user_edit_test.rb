@@ -17,12 +17,12 @@ class UserEditTest < ActionDispatch::IntegrationTest
 
   test "If logged in, user should only have access their own account" do 
 
-    user_logs_in(@admin_user.name, "adminpassword")
+    user_logs_in(@admin_user.email, "adminpassword")
     get "/users/" + @user.id.to_s + "/edit"
     assert_response 403
     user_logs_out 
 
-    user_logs_in(@user.name, "lamepassword")
+    user_logs_in(@user.email, "lamepassword")
     get "/users/" + @admin_user.id.to_s + "/edit"
     assert_response 403
     user_logs_out 
@@ -31,7 +31,7 @@ class UserEditTest < ActionDispatch::IntegrationTest
 
   test "If logged in, user should have access to their own account" do 
 
-    user_logs_in(@admin_user.name, "adminpassword")
+    user_logs_in(@admin_user.email, "adminpassword")
     get "/users/" + @admin_user.id.to_s + "/edit"
     assert_response 200
     assert_template 'users/edit'

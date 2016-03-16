@@ -22,7 +22,7 @@ class UserLoginTest < ActionDispatch::IntegrationTest
   end
 
   test "Successful login attempt for non admin" do
-    user_logs_in(@user.name, "lamepassword")
+    user_logs_in(@user.email, "lamepassword")
     assert_redirected_to '/articles'
     follow_redirect!
     assert_template 'articles/index'
@@ -38,7 +38,7 @@ class UserLoginTest < ActionDispatch::IntegrationTest
   end
 
   test "Successful login attempt for admin" do
-    user_logs_in(@admin_user.name,"adminpassword")
+    user_logs_in(@admin_user.email,"adminpassword")
     assert_redirected_to '/articles'
     follow_redirect!
     assert_template 'articles/index'
@@ -61,7 +61,7 @@ class UserLoginTest < ActionDispatch::IntegrationTest
 
   test "Only users should have user management options" do 
     
-    user_logs_in(@admin_user.name, "adminpassword")
+    user_logs_in(@admin_user.email, "adminpassword")
     follow_redirect!
 
     assert_user_settings_present @admin_user.id

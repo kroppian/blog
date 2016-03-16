@@ -54,7 +54,7 @@ class ActiveSupport::TestCase
   def user_logs_in(user_name, password)
     get login_path
     assert_template 'sessions/new'
-    post login_path, session: {name: user_name, password: password}
+    post login_path, session: {email: user_name, password: password}
   end
 
   def user_logs_out
