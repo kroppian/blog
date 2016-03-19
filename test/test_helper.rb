@@ -29,6 +29,21 @@ class ActiveSupport::TestCase
     assert_select 'a[href=?][class=navbar-brand]', articles_path, count: 1
     # Look for the "Home link"
     assert_select 'a[href=?] > span', articles_path, count: 1 
+    assert_select 'a[href=?]', about_path, count: 1
+  end
+
+  def assert_user_settings_not_present(*uid)
+    
+    assert_select 'a[href=?]', logout_path, count: 0 
+    uid.empty? ? assert_select('a[href^="/users/"][href$="/edit"]', count: 0) : assert_select('a[href=?]', "/users/" + uid.to_s + "/edit", count: 0)
+
+  end
+
+  def assert_user_settings_present(uid )
+
+    assert_select 'a[href=?]', logout_path, count: 1 
+    assert_select 'a[href=?]', "/users/" + uid.to_s + "/edit", count: 1
+    
   end
 
   def assert_logged_in_navbar_good
@@ -39,8 +54,11 @@ class ActiveSupport::TestCase
   def user_logs_in(user_name, password)
     get login_path
     assert_template 'sessions/new'
-    post login_path, session: {name: user_name, password: password}
+    post login_path, session: {email: user_name, password: password}
   end
 
+  def user_logs_out
+    delete logout_path      
+  end 
 
 end

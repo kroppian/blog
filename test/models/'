@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   def setup
-    @user = User.new(name: "freddy", password: "abcabc", password_confirmation: "abcabc", email: "grandpa@grandpas-cheez-barn.net", user_type: :non_admin)
+    @user = User.new(name: "freddy", password: "abcabc", password_confirmation: "abcabc", email: "grandpa@grandpas-cheez-barn.net")
   end
 
   test "Basic username creation test" do 
@@ -11,20 +11,12 @@ class UserTest < ActiveSupport::TestCase
 
   end 
 
-  test "Name must be non blank" do 
+  test "Username must be non blank" do 
 
     @user.name = ""
     assert_not @user.valid?
 
   end 
-
-  test "Name can have whitespace" do 
-
-    @user.name = "Grandpa Cheese"
-    assert @user.valid?
-
-  end 
-
 
   test "password confirmation must be fixed" do 
   
@@ -36,18 +28,10 @@ class UserTest < ActiveSupport::TestCase
   test "two users can have the same name" do
 
     duplicate_user = @user.dup
-    duplicate_user.email = "grandma@grandpas-cheez-barn.net"
     @user.save
     assert duplicate_user.valid? 
 
   end
-
-  test "email must not be blank" do 
-
-    @user.email = ""
-    assert_not @user.valid?
-
-  end 
 
   test "two users cannot have the same email" do
 
