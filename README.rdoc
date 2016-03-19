@@ -1,28 +1,58 @@
-== README
+= Simple Blog Website!
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+== Goals
 
-Things you may want to cover:
+This project has two main goals: 
 
-* Ruby version
+* A refresher in creating a rails application
+* Create a robust professional blog for myself, and/or whoever needs a blog as well. 
 
-* System dependencies
+== Project Overview
 
-* Configuration
+In short, this is a simple blog application that allows the blog owner to make blog posts, and allows end users to read the blog posts.
 
-* Database creation
+The blog is maintained primarily by an "owner" who is can create/edit/delete posts. The about page of the blog is based on the "about" and "name" field of the "owner" user. There are administrator users that are also allowed to create/edit/delete posts.
 
-* Database initialization
+== Set up
 
-* How to run the test suite
+I haven't had time to test the blog application on other systems, but below is the configuration that I'm curently running on.
 
-* Services (job queues, cache servers, search engines, etc.)
+=== Confirmed Working Ruby Version 
 
-* Deployment instructions
+Tested and ran on Ruby 2.3.0. 
 
-* ...
+=== Confirmed Working OS
 
+Tested and ran on Arch Linux
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+=== Database configuration 
+
+I use postgres to integrate with Heroku. You can look up how to install Postgres on Arch Linux on its Wiki https://wiki.archlinux.org/index.php/PostgreSQL
+
+You'll have to make two psql databases: blog_dev and blog_test. 
+
+Once psql is set up, run `rake db:setup` to get the development database set up. This will create the tables and seed the User table with the default admin user. 
+
+=== Running Tests 
+
+    rake test
+
+=== Deployment
+
+I've currently working on how to deploy to Heroku, so stay tunned! To start the server on your dev machine, execute
+
+    rails server
+
+=== Continuous integration
+
+I've been using Travis CI to test builds before they're merged with master.
+
+=== Using the blog for the first time. 
+
+To start adding posts to the blog as the owner, go to localhost:3000/login and enter the default admin credentials admin@blog.net with password "administrator". 
+
+I'm currently working on views to edit email, name and password. 
+
+Thanks for reading, and have fun poking around the source code! 
+
+kroppian
