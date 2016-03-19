@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   def setup
-    @user = User.new(name: "freddy", password: "abcabc", password_confirmation: "abcabc", email: "grandpa@grandpas-cheez-barn.net")
+    @user = User.new(name: "freddy", password: "abcabc", password_confirmation: "abcabc", email: "grandpa@grandpas-cheez-barn.net", user_type: :non_admin)
   end
 
   test "Basic username creation test" do 

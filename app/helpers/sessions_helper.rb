@@ -9,7 +9,8 @@ module SessionsHelper
   end
 
   def is_admin?
-    (not current_user.nil? ) && (User.find_by(id: session[:user_id]).name.eql? "admin")
+    # TODO why did user_type return a string?? I thought it was an enum...
+    (not current_user.nil? ) && (["admin", "owner"].include? User.find_by(id: session[:user_id]).user_type )
   end
 
   def current_user_id? ( id_in_question )

@@ -19,7 +19,8 @@ class UsersControllerTest < ActionController::TestCase
         about_found = curr_par.inner_html
       end
     }  
-    assert_equal about_found, @admin_user.about
+
+    assert_equal @admin_user.about, about_found 
 
   end
 

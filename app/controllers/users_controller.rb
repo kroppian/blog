@@ -7,7 +7,8 @@ class UsersController < ApplicationController
   end
 
   def about
-    @owner = User.find_by(name: "admin")
+    # TODO Better way of doing this?
+    @owner = User.owner.to_a[0]
   end
 
   def update

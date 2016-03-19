@@ -1,8 +1,12 @@
 class User < ActiveRecord::Base
 
+  enum user_type: [ :non_admin, :admin, :owner ]
+
   validates :name, presence: true, uniqueness: false
 
   validates :email, presence: true, uniqueness: true
+
+  validates :user_type, presence: true;
 
   has_secure_password
   validates :password, presence: true, length: {minimum: 6}

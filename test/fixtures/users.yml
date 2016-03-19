@@ -5,10 +5,12 @@ paul:
   name: paul
   password_digest: <%= User.digest('lamepassword') %>
   about: 
+  user_type: 0
 
 admin:
   email: crispy_tofu@aol.com
-  name: admin
+  name: "Commander Crisp"
   password_digest: <%= User.digest('adminpassword') %>
   about: A stately fellow. Really great eye brows. 
+  user_type: 2 # TODO how do I write the enum in YML?
 
