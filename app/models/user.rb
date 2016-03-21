@@ -4,12 +4,12 @@ class User < ActiveRecord::Base
 
   validates :name, presence: true, uniqueness: false
 
-  validates :email, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true, if: :email
 
   validates :user_type, presence: true;
 
   has_secure_password
-  validates :password, presence: true, length: {minimum: 6}
+  validates :password, presence: true, length: {minimum: 6}, if: :password
 
   def User.digest(string)
   
