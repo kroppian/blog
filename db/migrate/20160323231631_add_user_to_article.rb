@@ -1,5 +1,5 @@
 class AddUserToArticle < ActiveRecord::Migration
   def change
-    add_column :articles, :user_id, :integer, presence: true
+    add_column :articles, :user_id, :integer, null: false
   end
 end
