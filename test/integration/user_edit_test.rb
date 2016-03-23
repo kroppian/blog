@@ -38,5 +38,26 @@ class UserEditTest < ActionDispatch::IntegrationTest
 
   end
 
+  test "Users should only edit fields that they select" do 
+
+
+  end
+
+  test "Users should be able to edit their username" do
+
+  end
+
+  test "Users should be able to edit their about page" do 
+
+  end
+
+  test "Users should be able to edit their password" do 
+
+  end
+ 
+  test "Users should be able to edit their email" do 
+
+  end
+
 end
 
