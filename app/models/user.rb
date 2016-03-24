@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
 
+  has_many :articles
+
   enum user_type: [ :non_admin, :admin, :owner ]
 
   validates :name, presence: true, uniqueness: false
