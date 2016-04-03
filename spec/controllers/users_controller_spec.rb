@@ -4,9 +4,10 @@ RSpec.describe UsersController, type: :controller do
 
   before do 
 
-    @normal_user1 = create(:user)    
-    @normal_user2 = create(:user, email: "shmoe@yahoo.com")    
-      
+    @normal_user = create(:user)    
+    @admin_user = create(:user, email: "shmoe@yahoo.com", user_type: 1)    
+    @owner_user = create(:user, email: "bossman@hugoboss.com",about: "I am in charge", user_type: 2)
+
   end
 
   describe "#GET edit" do 
@@ -17,57 +18,148 @@ RSpec.describe UsersController, type: :controller do
         get :edit, id: 1 
         expect(response.response_code).to eql(403)
       end
-    end
+
+    end # end -- context "user not logged in and tries to edit user"
 
     context "user logs in and tries to edit other user" do
 
       it "returns a 403 error"  do
 
-        log_in(@normal_user1)
-        get :edit, id: @normal_user2.id
+        log_in(@normal_user)
+        get :edit, id: @admin_user.id
         expect(response.response_code).to eql(403)
         log_out 
 
-        log_in(@normal_user2)
-        get :edit, id: @normal_user1.id
+        log_in(@admin_user)
+        get :edit, id: @normal_user.id
         expect(response.response_code).to eql(403)
         log_out 
 
       end
       
-    end
+    end # end -- context "user logs in and tries to edit other user" 
 
     context "user logs in and edits his/her own account" do
 
       it "returns a 200 response"  do
 
-        log_in(@normal_user1)
-        get :edit, id: @normal_user1.id
+        log_in(@normal_user)
+        get :edit, id: @normal_user.id
         expect(response.response_code).to eql(200)
         log_out 
 
-        log_in(@normal_user2)
-        get :edit, id: @normal_user2.id
+        log_in(@admin_user)
+        get :edit, id: @admin_user.id
         expect(response.response_code).to eql(200)
         log_out 
 
-      end
+      end # end -- context "user logs in and tries to edit other user" 
 
       it "Offers the correct user to edit"  do
 
-        log_in(@normal_user1)
-        get :edit, id: @normal_user1.id
-        expect(assigns(:user).id).to eql(@normal_user1.id)
+        log_in(@normal_user)
+        get :edit, id: @normal_user.id
+        expect(assigns(:user).id).to eql(@normal_user.id)
         log_out 
 
 
-        log_in(@normal_user2)
-        get :edit, id: @normal_user2.id
-        expect(assigns(:user).id).to eql(@normal_user2.id)
+        log_in(@admin_user)
+        get :edit, id: @admin_user.id
+        expect(assigns(:user).id).to eql(@admin_user.id)
         log_out 
 
       end
       
-    end
-  end
+    end # end -- context "user logs in and edits his/her own account"
+
+  end # end -- describe "#GET edit"
+
+  describe "GET #about" do 
+
+    context "no one is logged in, and about is accessed" do
+
+      it "returns the owner's about page" do
+
+        get :about 
+        expect(assigns(:owner).id).to eql(@owner_user.id)
+
+      end
+
+    end # end -- "no one is logged in, and about is accessed" 
+
+    context "normal user logs in, and about is accessed" do
+
+      it "returns the owner's about page" do
+
+        log_in(@normal_user)
+        get :about 
+        expect(assigns(:owner).id).to eql(@owner_user.id)
+        log_out
+
+      end
+
+    end # end -- "normal user logs in, and about is accessed" 
+
+    context "admin logs in, and about is accessed" do
+
+      it "returns the owner's about page" do
+
+        log_in(@admin_user)
+        get :about 
+        expect(assigns(:owner).id).to eql(@owner_user.id)
+        log_out
+
+      end
+
+    end # end -- "admin logs in, and about is accessed" 
+
+  end # end -- "GET #about" 
+
+
+  describe "PATCH #update" do 
+
+    context "user updates his/her owns account" do 
+   
+      it "should edit the user and redirect to the main page" do 
+        
+        log_in(@normal_user) 
+        options = { name: 'Freddy'}
+        patch :update, id: @normal_user.id, user: options
+       
+        # TODO get this to work. Trying to check if the attribute was updated in the user object
+        #expect(@normal_user.name).to eql(options[:name])
+        expect(response.response_code).to eql(200)
+
+      end
+
+    end # end -- "user edits his/her owns account"
+
+
+    context "user updates tries to edit a user account while not logged in" do 
+
+      it "should return with a 403 error" do
+
+        options = { name: 'Freddy'}
+        patch :update, id: @normal_user.id, user: options
+        expect(response.response_code).to eql(403)
+      
+      end
+
+    end # end -- "user edits tries to edit a user account while not logged in"
+
+    context "user logs in and tries to update another user account" do 
+      
+      it "should return with a 403 error" do 
+
+        log_in(@normal_user)
+        options = { name: 'Freddy'}
+        patch :update, id: @admin_user.id, user: options
+        expect(response.response_code).to eql(403)
+
+      end
+
+    end # end -- "user logs in and tries to update another user account" 
+
+  end # end -- "PATCH #update"
+
 end
