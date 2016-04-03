@@ -19,6 +19,9 @@
 require 'factory_girl_rails'
 
 RSpec.configure do |config|
+
+  require 'support/factory_girl'
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
@@ -40,6 +43,14 @@ RSpec.configure do |config|
     # a real object. This is generally recommended, and will default to
     # `true` in RSpec 4.
     mocks.verify_partial_doubles = true
+  end
+
+  def log_in(user)
+    session[:user_id] = user.id
+  end
+
+  def log_out
+    session.delete(:user_id)
   end
 
 # The settings below are suggested to provide a good initial experience
@@ -91,7 +102,5 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
-
-  require 'support/factory_girl'
 
 end
