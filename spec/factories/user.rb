@@ -4,7 +4,7 @@ FactoryGirl.define do
   factory :user do
 
     id { rand(1..1_000_000) }
-    email "paul@gmail.com"
+    email { ('a'..'z').to_a.shuffle[0,8].join + "@gmail.com" }
     name "paul"
     password 'lamepassword'
     password_confirmation 'lamepassword'
