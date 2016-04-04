@@ -6,7 +6,7 @@ RSpec.describe UsersController, type: :controller do
 
     @normal_user = create(:user)    
     @admin_user = create(:user, user_type: 1)    
-    @owner_user = create(:user, about: "I am in charge", user_type: 2)
+    @owner_user = create(:user,about: "I am in charge", user_type: 2)
 
   end
 
