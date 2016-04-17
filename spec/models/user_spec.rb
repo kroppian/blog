@@ -51,9 +51,9 @@ RSpec.describe User, type: :model do
   end
 
   
-  describe 'Name formatting' do 
+  describe 'name formatting' do 
 
-    context 'user creates a user with a name of length zero' do 
+    context 'user tries to create a user with a name of length zero' do 
       # TODO what the hell are these? Are they functions?
       it 'should raise an active record error' do 
         new_user = build(:user, name: '')
@@ -61,14 +61,14 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context 'user creates a user with a name of nil' do 
+    context 'user tries to create a user with a name of nil' do 
       it 'should raise an active record error' do 
         new_user = build(:user, name: nil)
         expect{ new_user.save! }.to raise_error(ActiveRecord::RecordInvalid)
       end
     end 
 
-    context 'user creates a user with a name of one character' do 
+    context 'user tries to create a user with a name of one character' do 
       it 'should raise an active record error' do 
         new_user = build(:user, name: 'Q')
         expect{ new_user.save! }.to change {User.count}
@@ -76,6 +76,45 @@ RSpec.describe User, type: :model do
     end 
 
     # TODO unicode character support
+
+  end
+
+  describe 'password formatting' do 
+
+    context 'user tries to create a user with a nil password' do 
+       it 'should raise an active record error' do 
+        new_user = build(:user, password: nil, password_confirmation: nil)
+        expect{ new_user.save! }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+
+    context 'user tries to create a user with a password of length zero' do 
+       it 'should raise an active record error' do 
+        new_user = build(:user, password: '', password_confirmation: '')
+        expect{ new_user.save! }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+
+    context 'user tries to create a user with a password with a length less than 6' do 
+       it 'should raise an active record error' do 
+        new_user = build(:user, password: '12345', password_confirmation: '12345')
+        expect{ new_user.save! }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+
+    context 'user tries to create a user with a password with a length of 6' do 
+       it 'should create the user correctly' do 
+        new_user = build(:user, password: '123456', password_confirmation: '123456')
+        expect{ new_user.save! }.to change {User.count}
+      end
+    end
+
+    context 'user tries to create a user with a password with incorrect password confirmation' do 
+       it 'should raise an active record error' do 
+        new_user = build(:user, password: '123456', password_confirmation: '223456')
+        expect{ new_user.save! }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
 
   end
 
