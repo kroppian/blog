@@ -5,6 +5,79 @@ RSpec.describe User, type: :model do
   # TODO should I use 'it_behaves_like? 
   # TODO should I use vcr?
 
+  describe 'user_type value' do 
+
+    context 'a user tries to create a user without a user_type' do 
+      it 'it should raise an active record error' do 
+        new_user = build(:user, user_type: nil)  
+        expect{ new_user.save! }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+    
+    context 'a user tries to create a user with an out of range user_type' do 
+      it 'it should raise an active record error' do 
+        # TODO how can I properly test this if I can't even use FactoryGirl to create
+        # and draft user?
+        #new_user = build(:user, user_type: 3)   # negative??
+        #expect{ new_user.save! }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+
+  end
+
+  describe 'about page' do 
+
+    context 'user tries to create a user with a nil about' do 
+      it 'should create the user' do 
+        new_user = build(:user, about: nil)
+        expect{ new_user.save! }.to change {User.count}
+      end
+    end
+
+    context 'user tries to create a user with a blank string' do 
+      it 'should create the user' do 
+        new_user = build(:user, about: '')
+        expect{ new_user.save! }.to change {User.count}
+      end
+    end
+
+    context 'user tries to create a user with a non-zero string' do 
+      it 'should create the user' do 
+        new_user = build(:user, about: 'I\'m a dude.')
+        expect{ new_user.save! }.to change {User.count}
+      end
+    end
+
+  end
+
+  
+  describe 'Name formatting' do 
+
+    context 'user creates a user with a name of length zero' do 
+      # TODO what the hell are these? Are they functions?
+      it 'should raise an active record error' do 
+        new_user = build(:user, name: '')
+        expect{ new_user.save! }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+
+    context 'user creates a user with a name of nil' do 
+      it 'should raise an active record error' do 
+        new_user = build(:user, name: nil)
+        expect{ new_user.save! }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end 
+
+    context 'user creates a user with a name of one character' do 
+      it 'should raise an active record error' do 
+        new_user = build(:user, name: 'Q')
+        expect{ new_user.save! }.to change {User.count}
+      end
+    end 
+
+    # TODO unicode character support
+
+  end
 
   describe 'email uniqueness' do 
 
