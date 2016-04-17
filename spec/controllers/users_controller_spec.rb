@@ -10,119 +10,89 @@ RSpec.describe UsersController, type: :controller do
 
   end
 
-  describe "#GET edit" do 
+  describe "GET #edit" do 
 
     context "user not logged in and tries to edit user" do
-
       it "returns a 403 error" do
         get :edit, id: @normal_user.id
         expect(response.response_code).to eql(403)
       end
-
-    end # end -- context "user not logged in and tries to edit user"
+    end 
 
     context "user logs in and tries to edit other user" do
-
       it "returns a 403 error"  do
         log_in(@normal_user)
         get :edit, id: @admin_user.id
         expect(response.response_code).to eql(403)
         log_out 
-
         log_in(@admin_user)
         get :edit, id: @normal_user.id
         expect(response.response_code).to eql(403)
         log_out 
-
       end
-      
-    end # end -- context "user logs in and tries to edit other user" 
+    end 
 
     context "user logs in and edits his/her own account" do
-
       it "returns a 200 response"  do
-
         log_in(@normal_user)
         get :edit, id: @normal_user.id
         expect(response.response_code).to eql(200)
         log_out 
-
         log_in(@admin_user)
         get :edit, id: @admin_user.id
         expect(response.response_code).to eql(200)
         log_out 
-
-      end # end -- context "user logs in and tries to edit other user" 
-
+      end 
       it "Offers the correct user to edit"  do
-
         log_in(@normal_user)
         get :edit, id: @normal_user.id
         expect(assigns(:user).id).to eql(@normal_user.id)
         log_out 
 
-
         log_in(@admin_user)
         get :edit, id: @admin_user.id
         expect(assigns(:user).id).to eql(@admin_user.id)
         log_out 
-
       end
-      
-    end # end -- context "user logs in and edits his/her own account"
+    end 
 
-  end # end -- describe "#GET edit"
+  end 
 
   describe "GET #about" do 
 
     context "no one is logged in, and about is accessed" do
-
       it "returns the owner's about page" do
-
         get :about 
         expect(assigns(:owner).id).to eql(@owner_user.id)
-
       end
-
-    end # end -- "no one is logged in, and about is accessed" 
+    end 
 
     context "normal user logs in, and about is accessed" do
-
       it "returns the owner's about page" do
-
         log_in(@normal_user)
         get :about 
         expect(assigns(:owner).id).to eql(@owner_user.id)
         log_out
-
       end
-
-    end # end -- "normal user logs in, and about is accessed" 
+    end 
 
     context "admin logs in, and about is accessed" do
-
       it "returns the owner's about page" do
-
         log_in(@admin_user)
         get :about 
         expect(assigns(:owner).id).to eql(@owner_user.id)
         log_out
-
       end
+    end 
 
-    end # end -- "admin logs in, and about is accessed" 
-
-  end # end -- "GET #about" 
+  end 
 
 
   describe "PATCH #update" do 
 
     context "user updates his/her owns account" do 
-   
       it "should edit any user field and redirect to the main page" do 
-
         log_in(@normal_user) 
-
         # TODO why is this failing?
 =begin
         options = { email: 'bobby@bobnet.net'}
@@ -137,41 +107,49 @@ RSpec.describe UsersController, type: :controller do
 =end      
         options = { password: 'badpassword', password_confirmation: 'badpassword'}
         patch :update, id: @normal_user.id, user: options
-       
         # TODO check the password value?
         expect(response).to redirect_to(articles_path)
         log_out
-
       end
-
-    end # end -- "user edits his/her owns account"
+    end 
 
 
     context "user updates tries to edit a user account while not logged in" do 
-
       it "should return with a 403 error" do
-
         options = { name: 'Freddy'}
         patch :update, id: @normal_user.id, user: options
         expect(response.response_code).to eql(403)
-      
       end
-
-    end # end -- "user edits tries to edit a user account while not logged in"
+    end 
 
     context "user logs in and tries to update another user account" do 
-      
       it "should return with a 403 error" do 
-
         log_in(@normal_user)
         options = { name: 'Freddy'}
         patch :update, id: @admin_user.id, user: options
         expect(response.response_code).to eql(403)
-
       end
+    end 
 
-    end # end -- "user logs in and tries to update another user account" 
+  end 
 
-  end # end -- "PATCH #update"
+  describe "GET #new" do 
+
+    # TODO complete me
+   
+  end
+
+  describe "POST #create" do 
+
+    # TODO complete me
+
+  end
+
+  describe "POST #delete" do 
+
+    # TODO complete me
+
+
+  end
 
 end
