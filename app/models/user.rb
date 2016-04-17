@@ -6,7 +6,10 @@ class User < ActiveRecord::Base
 
   validates :name, presence: true, uniqueness: false
 
-  validates :email, presence: true, uniqueness: true
+  validates :email, presence: true, 
+    uniqueness: true,
+    format: {with: /\A(\w|\w[\w.]*\w)\@\w+\.\w+\Z/,
+      message: "[%{value}] must be in the format username@something.type"}
 
   validates :user_type, presence: true;
 
