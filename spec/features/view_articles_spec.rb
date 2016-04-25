@@ -1,5 +1,8 @@
 describe "viewing articles" do
-  
+
+  #
+  # Helper methods
+  #
   def expect_page_to_have_articles
     @articles.each do |art|
       expect(page).to have_link(art.title)
@@ -30,7 +33,6 @@ describe "viewing articles" do
     end
   end
 
-
   def expect_page_to_have_title
     expect(page).to have_css("h1", text: "The Click")
   end
@@ -45,6 +47,9 @@ describe "viewing articles" do
     expect(page).to have_current_path('/articles')
   end
 
+  #
+  # specs
+  #
   before do 
 
     # TODO is there a way to skip this declaration?
@@ -66,23 +71,16 @@ describe "viewing articles" do
 
   end
 
-=begin          <div class="btn-group-xs pull-right" role="group" aria-label="Right Align">
-            <%= link_to  edit_article_path(art), class: "btn btn-default" do %> 
-              <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 
-            <% end %>
-            <%= link_to  article_path(art),  {'data-method' => :delete, class: "btn btn-danger", :data => { confirm: 'Are you sure?'}}  do %> 
-              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 
-            <% end %></div>
-=end
-
-
   context "when a not logged in user accesses the index" do
     it 'displays an index page with all the articles' do
       visit '/'
       expect_page_to_have_title
       expect_page_to_have_articles
     end
-    # TODO are there no edit or delete links?
+    it 'doesn\'t display edit or delete buttons' do
+      expect_articles_to_not_have_edit_buttons
+      expect_articles_to_not_have_delete_buttons
+    end
   end
 
   context "when a non-admin user accesses the index" do 
@@ -114,7 +112,6 @@ describe "viewing articles" do
       expect_articles_to_have_delete_buttons
     end
   end
-
 
   context "when the owner user accesses the index" do 
     before do
