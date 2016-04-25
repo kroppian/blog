@@ -20,13 +20,13 @@ describe "viewing articles" do
 
   def expect_articles_to_have_delete_buttons
     @articles.each do |art|
-      expect(page).to have_xpath("//a[data-method='delete'][@href='#{article_path(art)}']")
+      expect(page).to have_xpath("//a[@data-method='delete' and @href='#{article_path(art)}']")
     end
   end
 
   def expect_articles_to_not_have_delete_buttons
     @articles.each do |art|
-      expect(page).to have_xpath("//a[@href='#{edit_article_path(art)}']")
+      expect(page).to have_no_xpath("//a[data-method='delete' and @href='#{article_path(art)}']")
     end
   end
 
@@ -96,7 +96,7 @@ describe "viewing articles" do
     end
     it 'doesn\'t display edit or delete buttons' do
       expect_articles_to_not_have_edit_buttons
-
+      expect_articles_to_not_have_delete_buttons
     end
   end
 
@@ -111,7 +111,7 @@ describe "viewing articles" do
     end
     it 'displays edit or delete buttons' do
       expect_articles_to_have_edit_buttons
-      #expect_articles_to_have_delete_buttons
+      expect_articles_to_have_delete_buttons
     end
   end
 
@@ -127,9 +127,9 @@ describe "viewing articles" do
     end
     it 'displays edit or delete buttons' do
       expect_articles_to_have_edit_buttons
-
+      expect_articles_to_have_delete_buttons
     end
   end
 
-
 end
+
