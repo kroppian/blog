@@ -24,7 +24,17 @@ RSpec.describe ArticlesController, type: :controller do
       end
     end  
 
-    context "user logs in and tries to view article" do
+    context "non-admin user logs in and tries to view article" do
+      it "Article should be displayed" do
+        log_in(@normal_user)
+        get :show, id: @articles.first.id 
+        expect(assigns(:article).id).to eql(@articles.first.id)
+        expect(response.response_code).to eql(200)
+        log_out
+      end
+    end  
+
+    context "admin user logs in and tries to view article" do
       it "Article should be displayed" do
         log_in(@admin_user)
         get :show, id: @articles.first.id 
@@ -64,7 +74,7 @@ RSpec.describe ArticlesController, type: :controller do
 
   describe "GET #new" do
 
-    context "user not logged in and tires to access new article page" do
+    context "user not logged in and tries to access new article page" do
       it "returns a 403 error" do
         get :new
         expect(response.response_code).to eql(403)

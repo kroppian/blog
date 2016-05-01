@@ -69,17 +69,15 @@ describe "viewing articles" do
       expect(page).to have_text(@title)
       expect(page).to have_text(@text)
     end
-
   end
 
   context 'when the owner tries to create an article' do 
+    # TODO complete me
     it 'displays a new article button on the index' do
       log_in @owner
       visit '/'
       expect(page).to have_link('New Article')
     end
   end
-
-  
 
 end
