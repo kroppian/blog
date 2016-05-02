@@ -1,5 +1,7 @@
 class ArticlesController < ApplicationController
 
+  before_action :check_autho, except: [:show, :index]
+
   def show
     @article = Article.find(params[:id])
   end
@@ -9,30 +11,14 @@ class ArticlesController < ApplicationController
   end
 
   def new 
-    if not is_admin?
-      render_forbidden
-    end  
-
     @article = Article.new
-
   end
 
   def edit 
-
-    if not is_admin?
-      render_forbidden
-    end
-
     @article = Article.find(params[:id])
-
   end
 
   def create
-
-    if not is_admin?
-      render_forbidden
-    end
-
     @article = Article.new(article_params)
     result = @article.save
     if result
@@ -43,30 +29,18 @@ class ArticlesController < ApplicationController
   end
 
   def update
-
-    if not is_admin?
-      render_forbidden
-    end
-
     @article = Article.find(params[:id])
     if @article.update(article_params)
       redirect_to @article
     else
       render 'edit'
     end
-  
   end
 
   def destroy 
-
-    if not is_admin?
-      render_forbidden
-    end
-
     @article = Article.find(params[:id])
     @article.destroy
     redirect_to articles_path
-
   end
 
   private 
@@ -75,6 +49,13 @@ class ArticlesController < ApplicationController
         .require(:article)
         .permit(:title,:text)
         .merge(user: current_user)
+    end
+
+    def check_autho
+      if not is_admin?
+        render_forbidden
+        return
+      end
     end
 
 end

@@ -78,6 +78,7 @@ RSpec.describe ArticlesController, type: :controller do
       it "returns a 403 error" do
         get :new
         expect(response.response_code).to eql(403)
+        expect(assigns(:article)).to eql(nil)
       end
     end 
 
@@ -86,6 +87,7 @@ RSpec.describe ArticlesController, type: :controller do
         log_in(@normal_user)
         get :new
         expect(response.response_code).to eql(403)
+        expect(assigns(:article)).to eql(nil)
         log_out
       end
     end 
@@ -95,6 +97,7 @@ RSpec.describe ArticlesController, type: :controller do
         log_in(@admin_user)
         get :new
         expect(response.response_code).to eql(200)
+        expect(assigns(:article).class).to eql(Article)
         log_out
       end
     end 
@@ -104,6 +107,7 @@ RSpec.describe ArticlesController, type: :controller do
         log_in(@owner_user)
         get :new
         expect(response.response_code).to eql(200)
+        expect(assigns(:article).class).to eql(Article)
         log_out
       end
     end 
@@ -117,6 +121,7 @@ RSpec.describe ArticlesController, type: :controller do
         @articles.each do |art| 
           get :edit, id: art.id
           expect(response.response_code).to eql(403)
+          expect(assigns(:article)).to eql(nil)
         end
       end
     end 
@@ -127,6 +132,7 @@ RSpec.describe ArticlesController, type: :controller do
         @articles.each do |art| 
           get :edit, id: art.id
           expect(response.response_code).to eql(403)
+          expect(assigns(:article)).to eql(nil)
         end
         log_out
       end
@@ -138,6 +144,7 @@ RSpec.describe ArticlesController, type: :controller do
         @articles.each do |art| 
           get :edit, id: art.id
           expect(response.response_code).to eql(200)
+          expect(assigns(:article)).to eql(art)
         end
         log_out
       end
@@ -149,6 +156,7 @@ RSpec.describe ArticlesController, type: :controller do
         @articles.each do |art| 
           get :edit, id: art.id
           expect(response.response_code).to eql(200)
+          expect(assigns(:article)).to eql(art)
         end
         log_out
       end
